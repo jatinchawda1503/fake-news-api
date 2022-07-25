@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+import json
+from fastapi import FastAPI,Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -22,6 +24,13 @@ def home():
     return {"DATA" : "Test"}
 
 @app.post('/get_url')
-async def get_url(url):
-    print(url)
-    return {'message': url}
+async def get_url(self, request: Request):
+    body = await request.body()
+    json_body = json.loads(body)
+    self.response_data = {
+                "msg": json_body
+            }
+    return self.respond_api()
+
+def respond_api(self):
+        return JSONResponse(content=self.response_data, status_code=self.response_code)
