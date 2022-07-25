@@ -4,11 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost",
-    "http://localhost:8000",
-    "http://localhost:8080",
-    "http://127.0.0.1:8000",
-    'http://127.0.0.1/get_url'
+    "https://fnd-api.herokuapp.com/",
 ]
 
 app.add_middleware(
@@ -26,6 +22,6 @@ def home():
     return {"DATA" : "Test"}
 
 @app.post('/get_url')
-async def upload_file(url):
+async def get_url(url):
     print(url)
-    return {'message': 'ok'}
+    return {'message': url}
