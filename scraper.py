@@ -41,6 +41,21 @@ def scrape_data(url):
     elif url_base.netloc == websites[3]:
         pass
 
+    elif url_base.netloc == websites[4]:
+        pass 
+    
+    elif url_base.netloc == websites[5]:
+        pass
+    
+    #www.dailymail.co.uk
+    elif url_base.netloc == websites[6]:
+        list = soup.find('div', id="content")
+        title = list.find('h2').text
+        author = list.find('a', class_="author").text
+        text = list.find('div', itemprop="articleBody").text
+    
+    elif url_base.netloc == websites[7]:
+        pass
     article = {'title': [title], 'author': [author], 'text': [text]}
     data_df = pd.DataFrame(article)
     return data_df
