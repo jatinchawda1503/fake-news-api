@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from urllib.parse import urlparse
 
-url_data = "https://news.yahoo.com/a-north-carolina-city-hired-a-black-town-manager-then-its-entire-police-force-resigned-224423896.html"
 
 def scrape_data(url):
     
@@ -36,17 +35,21 @@ def scrape_data(url):
         main_text = list.find('div',class_="article-body").findAll("p", recursive=False)
         text = ''.join([str(item.text) for item in main_text ])
 
-
+        
     #www.huffpost.com    
     elif url_base.netloc == websites[2]:
         soup = get_html(url)
         list = soup.find('body', class_="entry")
-        title = list.find('h1', class_="headline").text        
-        author = list.find('div', class_="entry__byline__author").find("a")['data-vars-item-name']
+        title = list.find('h1', class_="headline").text
+        if list.find('div', class_="entry__byline__author") is True:        
+            author = list.find('div', class_="entry__byline__author").find("a")['data-vars-item-name'] 
+        else:    
+            author = list.find('span', class_="entry-wirepartner__byline").text
         main_text = list.find_all("div",class_='cli-text')
         text = ''.join([str(item.text) for item in main_text ])
         
-
+        
+        
     
     #www.latimes.com
     elif url_base.netloc == websites[3]:
@@ -120,8 +123,3 @@ def scrape_data(url):
     article = {'title': [title], 'author': [author], 'text': [text]}
     data_df = pd.DataFrame(article)
     return data_df
-
-url_data = "https://www.foxnews.com/media/idaho-sheriff-sends-dire-warning-idiotic-biden-officials-cusp-complete-collapse"
-
-data = scrape_data(url_data)
-print(data)
