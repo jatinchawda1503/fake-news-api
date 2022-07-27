@@ -40,10 +40,14 @@ def scrape_data(url):
     elif url_base.netloc == websites[2]:
         soup = get_html(url)
         list = soup.find('body', class_="entry")
-        title = list.find('h1', class_="headline").text        
-        author = list.find('div', class_="entry__byline__author").find("a")['data-vars-item-name']
+        title = list.find('h1', class_="headline").text
+        if list.find('div', class_="entry__byline__author") is True:        
+            author = list.find('div', class_="entry__byline__author").find("a")['data-vars-item-name'] 
+        else:    
+            author = list.find('span', class_="entry-wirepartner__byline").text
         main_text = list.find_all("div",class_='cli-text')
         text = ''.join([str(item.text) for item in main_text ])
+        
         
         
     
