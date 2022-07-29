@@ -1,2 +1,2 @@
 # fake-news-api
-- git push heroku main
+- This is Fake News Api 
